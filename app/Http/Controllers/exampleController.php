@@ -15,6 +15,6 @@ class exampleController extends Controller
     }
 
     public function aboutPage(){
-        return view('about');
+        return view('single-post');
     }
 }
