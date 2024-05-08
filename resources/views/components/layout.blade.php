@@ -51,6 +51,22 @@
     </header>
     <!-- header ends here -->
 
+    @if (session()->has('Success'))
+        <div class="container container-narrow">
+            <div class="alert alert-success text-center">
+                {{session('Success')}}
+            </div>
+        </div>
+    @endif
+
+    @if (session()->has('failed'))
+        <div class="container container-narrow">
+            <div class="alert alert-danger text-center">
+                {{session('failed')}}
+            </div>
+        </div>
+    @endif
+
     {{$slot}}
 
      <!-- footer begins -->
