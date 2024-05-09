@@ -16,7 +16,8 @@
         </p>
 
         <div class="body-content">
-          {{$post->body}}
+            {{-- This method if using "!!" is not safe, it risks data getting hacked--}}
+          {!! $post->body !!}
         </div>
       </div>
 </x-layout>
