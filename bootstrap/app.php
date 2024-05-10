@@ -11,7 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+
+        //After making a middleware in terminal, you provide the alias to be able to use it.
+        $middleware->alias([
+            'mustBeLoggedIn' => \app\Http\Middleware\MustBeLoggedIn::class,
+        ])
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
