@@ -16,4 +16,7 @@ Route::get('/create-post',[PostController::class, 'showCreateForm'])->middleware
 Route::post('/create-post',[PostController::class, 'storeNewPost'])->middleware('auth');
 Route::get('/post/{post}',[PostController::class, 'viewSinglePost']);
 
+//Profile related routes
+Route::get('/profile/{user:username}', [userController::class, 'profile']);
+
 
