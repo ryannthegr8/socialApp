@@ -2,12 +2,19 @@
     <div class="container py-md-5 container--narrow">
         <div class="d-flex justify-content-between">
           <h2>{{$post->title}}</h2>
-          <span class="pt-2">
-            <a href="#" class="text-primary mr-2" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
-            <form class="delete-post-form d-inline" action="#" method="POST">
-              <button class="delete-post-button text-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash"></i></button>
-            </form>
-          </span>
+
+          {{-- Wrapping a condition that allows the user
+             to be able to see the edit and delete icons or not --}}
+            @can('update', $post)
+                <span class="pt-2">
+                        <a href="#" class="text-primary mr-2" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
+                    <form class="delete-post-form d-inline" action="/post/{{$post->id}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="delete-post-button text-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash"></i></button>
+                    </form>
+                </span>
+          @endcan
         </div>
 
         <p class="text-muted small mb-4">
@@ -16,7 +23,8 @@
         </p>
 
         <div class="body-content">
-            {{-- This method if using "!!" is not safe, it risks data getting hacked--}}
+            {{-- This method of using "!!" is not safe, it risks data getting hacked
+            So use it when you really need to use it--}}
           {!! $post->body !!}
         </div>
       </div>

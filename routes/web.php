@@ -16,6 +16,11 @@ Route::get('/create-post',[PostController::class, 'showCreateForm'])->middleware
 Route::post('/create-post',[PostController::class, 'storeNewPost'])->middleware('auth');
 Route::get('/post/{post}',[PostController::class, 'viewSinglePost']);
 
+/**  Implementing delete with controller and and routes method.
+ * The path is identical to the view single post, same url pattern.
+*/
+Route::delete('/post/{post}',[PostController::class, 'delete']);
+
 //Profile related routes
 Route::get('/profile/{user:username}', [userController::class, 'profile']);
 
