@@ -4,6 +4,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 
+// Admin pages
+Route::get('/admin-only', function(){
+    return 'Only admins can see this page';
+})->middleware('can:visitAdminPages');
 
 //User related routes
 Route::get('/', [userController::class, "showCorrectHomePage"])->name('login');
