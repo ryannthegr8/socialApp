@@ -19,7 +19,11 @@ Route::get('/post/{post}',[PostController::class, 'viewSinglePost']);
 /**  Implementing delete with controller and and routes method.
  * The path is identical to the view single post, same url pattern.
 */
-Route::delete('/post/{post}',[PostController::class, 'delete']);
+Route::delete('/post/{post}',[PostController::class, 'delete'])->middleware('can:delete,post');
+
+// Routes to view edit form and update
+Route::get('post/{post}/edit',[PostController::class, 'showEditForm'])->Middleware('can:update,post');
+Route::put('post/{post}', [PostController::class, 'actuallyUpdate'])->middleware('can:update,post');
 
 //Profile related routes
 Route::get('/profile/{user:username}', [userController::class, 'profile']);

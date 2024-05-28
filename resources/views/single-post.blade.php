@@ -7,7 +7,9 @@
              to be able to see the edit and delete icons or not --}}
             @can('update', $post)
                 <span class="pt-2">
-                        <a href="#" class="text-primary mr-2" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
+
+                    {{-- When edit is clicked it takes the user to edit page --}}
+                        <a href="/post/{{$post->id}}/edit" class="text-primary mr-2" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
                     <form class="delete-post-form d-inline" action="/post/{{$post->id}}" method="POST">
                         @csrf
                         @method('DELETE')

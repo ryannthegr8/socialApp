@@ -37,7 +37,10 @@ class userController extends Controller
         ]);
 
         //Checks if the user has an account
-        if (Auth()->attempt(['username'=>$incomingFields['loginusername'], 'password'=>$incomingFields['loginpassword']])) {
+        if (Auth()->attempt([
+            'username'=>$incomingFields['loginusername'],
+            'password'=>$incomingFields['loginpassword']
+        ])) {
 
             //Logs the user in
             $request->session()->regenerate();
