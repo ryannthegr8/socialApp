@@ -39,6 +39,11 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
+        // To allow admin to be able to delete
+        if ($user->isAdmin == 1) {
+            return true;
+        }
+        // Compares the post id with the owner
         return $user->id === $post->user_id;
     }
 
@@ -47,6 +52,11 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
+        // To allow admin to be able to delete
+        if ($user->isAdmin == 1) {
+            return true;
+        }
+        // Compares the post id with the owner
         return $user->id === $post->user_id;
     }
 
