@@ -8,6 +8,18 @@ use Illuminate\Validation\Rule;
 
 class userController extends Controller
 {
+    public function storeAvatar(Request $request){
+        /** 1. Get data from input form
+         *  2. The input tag from form has a name of "avatar" that is why it is used below
+         *  3. the file is stored in a folder named as "userAvatars"
+         *  4. the folder is created in storage/app/userAvatars
+        */
+        $request->file('avatar')->store('public/userAvatars');
+        return 'hey';
+    }
+    public function showAvatarForm(){
+        return view('avatar-form');
+    }
 
     public function profile(User $user){
 
