@@ -15,7 +15,7 @@ class MustBeLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //The code melow is of a new created middleware feature.
+        //The code below is of a new created middleware feature.
         // if (auth()->check()) {
         //     return $next($request);
         // }

@@ -4,7 +4,7 @@
         <form action="/manage-avatar" method="POST" enctype="multipart/form-data"{{--Without enctype, laravel will not see that you have attached a file--}}>
             @csrf
             <div class="mb-3">
-                <input type="file" name="avatar" required{{--required = client side validation--}}>
+                <input type="file" name="avatar" >
                 {{-- server side validation --}}
                 @error('avatar')
                     <p class="alert small alert-danger shadow-sm">{{$message}}</p>

@@ -4,18 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class userController extends Controller
 {
     public function storeAvatar(Request $request){
-        /** 1. Get data from input form
+        // uploaded file server-side validation
+        $request->validate([
+            'avatar' => 'required|image|max:20000'
+        ]);
+        /** Method 1 without compressing
+         *  1. Get data from input form
          *  2. The input tag from form has a name of "avatar" that is why it is used below
          *  3. the file is stored in a folder named as "userAvatars"
          *  4. the folder is created in storage/app/userAvatars
         */
-        $request->file('avatar')->store('public/userAvatars');
-        return 'hey';
+        // $request->file('avatar')->store('public/userAvatars');
+
+        /** Method 2 with compressing
+         *  1. create a variable with an new instance of ImageManager
+         *  ImageManager class comes from the composer package intervention/image
+         *  A driver is also used
+        */
+            // user variable
+            $user = auth()->user();
+            // variable for creating random filename
+            $filename = $user->id . "_" . uniqid() . ".jpg";
+
+            $manager = new ImageManager(new Driver());
+            // Give received file to manager
+            $image = $manager->read($request->file('avatar'));
+            // resizing
+            $imgData = $image->cover(120, 120)->toJpeg();
+            // store
+            Storage::put("public/avatars/" . $filename , $imgData);
     }
     public function showAvatarForm(){
         return view('avatar-form');
