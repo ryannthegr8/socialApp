@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follow;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -57,9 +58,19 @@ class userController extends Controller
     }
 
     public function profile(User $user){
+        // Follow and Unfollow button
+        $currentlyFollowing = 0; /** Default for even when user is not logged in */
+
+        if (auth()->check()) {
+            $currentlyFollowing = Follow::where([
+                ['user_id', '=', auth()->user()->id],
+                ['followedUser', '=', $user->id]
+            ])->count();
+        }
 
         //Querying the username, posts and postCount from database
         return view('profile-posts', [
+            'currentlyFollowing' => $currentlyFollowing,
             'avatar' => $user->avatar ,
             'username'=> $user->username,
             'posts' => $user->posts()->latest()->get(),

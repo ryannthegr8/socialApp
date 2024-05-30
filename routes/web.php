@@ -3,6 +3,7 @@
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\userController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 // Admin pages
