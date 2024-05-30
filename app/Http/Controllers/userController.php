@@ -6,6 +6,7 @@ use App\Models\Follow;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -57,7 +58,8 @@ class userController extends Controller
         return view('avatar-form');
     }
 
-    public function profile(User $user){
+    // Profiles Shared function
+    private function getSharedData($user){
         // Follow and Unfollow button
         $currentlyFollowing = 0; /** Default for even when user is not logged in */
 
@@ -68,14 +70,40 @@ class userController extends Controller
             ])->count();
         }
 
-        //Querying the username, posts and postCount from database
-        return view('profile-posts', [
+        View::share('sharedData', [
             'currentlyFollowing' => $currentlyFollowing,
             'avatar' => $user->avatar ,
             'username'=> $user->username,
-            'posts' => $user->posts()->latest()->get(),
             'postCount' => $user->posts()->count()
         ]);
+    }
+
+    // function for viewing profile
+    public function profile(User $user){
+        // importing shared function
+        $this->getSharedData($user);
+        //Querying the username, posts and postCount from database
+        return view('profile-posts', [
+            'posts' => $user->posts()->latest()->get(),
+        ]);
+    }
+    // function for viewing followers in profile
+    public function profileFollowers(User $user){
+        // importing shared function
+        $this->getSharedData($user);
+        //Querying the username, posts and postCount from database
+        return view('profile-followers', [
+            'posts' => $user->posts()->latest()->get(),
+        ]);
+    }
+    // function for viewing those following
+    public function profileFollowing(User $user){
+       // importing shared function
+       $this->getSharedData($user);
+       //Querying the username, posts and postCount from database
+       return view('profile-following', [
+           'posts' => $user->posts()->latest()->get(),
+       ]);
     }
     public function logout(){
         auth()->logout();
