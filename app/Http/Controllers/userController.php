@@ -39,8 +39,18 @@ class userController extends Controller
             $image = $manager->read($request->file('avatar'));
             // resizing
             $imgData = $image->cover(120, 120)->toJpeg();
-            // store
+            // store to laravel
             Storage::put("public/avatars/" . $filename , $imgData);
+            // Variable to enable deleting avatar
+            $oldAvatar = $user->avatar;
+            // store to database
+            $user->avatar = $filename;
+            $user->save();
+            // Deleting old avatar incase the user updates their avatar
+            if ($oldAvatar != '/fallback-avatar.jpg') {
+                Storage::delete(str_replace("/storage/", "public/", $oldAvatar));
+            }
+            return back()->with('Success', 'Congrats on your new avatar');
     }
     public function showAvatarForm(){
         return view('avatar-form');
@@ -50,6 +60,7 @@ class userController extends Controller
 
         //Querying the username, posts and postCount from database
         return view('profile-posts', [
+            'avatar' => $user->avatar ,
             'username'=> $user->username,
             'posts' => $user->posts()->latest()->get(),
             'postCount' => $user->posts()->count()

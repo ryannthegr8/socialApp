@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,6 +23,16 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    /** 
+     * Function for fallback avatar, incase user does not have an avatar.
+     *  This function is like a middleman/middle-step for filtering what is going to be the value for avatar.
+     */
+    protected function avatar(): Attribute {
+        return Attribute::make(get: function($value){
+            return $value ? '/storage/avatars/' . $value : 'fallback-avatar.jpg';
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
