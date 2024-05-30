@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,9 @@ Route::put('post/{post}', [PostController::class, 'actuallyUpdate'])->middleware
 
 //Profile related routes
 Route::get('/profile/{user:username}', [userController::class, 'profile']);
+
+// Follow related routes
+Route::post('/create-follow/{user:username}', [FollowController::class, 'createFollow'])->middleware('auth');
+Route::post('/remove-follow/{user:username}', [FollowController::class, 'removeFollow'])->middleware('auth');
 
 

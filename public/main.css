@@ -1,3 +1,11 @@
+:root {
+    /* Color variables */
+    --color-dominant: #9d8df1;
+    --color-dominant-variant: rgba(77, 181, 255, 0.4);
+    --color-white: #fff;
+    --color-black: rgb(0, 0, 0);
+}
+
 body {
     /* dark theme */
     background-color: rgba(0, 0, 0, 0.932);
@@ -12,7 +20,7 @@ body,
 }
 
 .header-bar {
-    background-color: #f9322c;
+    background-color: var(--color-dominant);
 }
 
 .container--narrow {

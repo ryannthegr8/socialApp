@@ -24,13 +24,13 @@ class User extends Authenticatable
         'password',
     ];
 
-    /** 
+    /**
      * Function for fallback avatar, incase user does not have an avatar.
      *  This function is like a middleman/middle-step for filtering what is going to be the value for avatar.
      */
     protected function avatar(): Attribute {
         return Attribute::make(get: function($value){
-            return $value ? '/storage/avatars/' . $value : 'fallback-avatar.jpg';
+            return $value ? '/storage/avatars/' . $value : '/fallback-avatar.jpg';
         });
     }
 
