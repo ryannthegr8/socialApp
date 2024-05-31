@@ -57,7 +57,19 @@ class User extends Authenticatable
         ];
     }
 
-    //Enabling querying of posts data from database
+    /** Function below defines relationship between a user and a follower */
+    public function followers(){
+        return $this->hasMany(Follow::class, 'followedUser');
+    }
+
+    /** Function below defines relationship between a user and a following */
+    public function followingTheseUsers(){
+        return $this->hasMany(Follow::class, 'user_id');
+    }
+
+    /** The function below enables querying of posts data from database
+     *  Defines relationship between user and posts
+     */
     public function posts(){
         return $this->hasMany(Post::class, 'user_id');
     }

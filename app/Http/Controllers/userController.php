@@ -74,7 +74,9 @@ class userController extends Controller
             'currentlyFollowing' => $currentlyFollowing,
             'avatar' => $user->avatar ,
             'username'=> $user->username,
-            'postCount' => $user->posts()->count()
+            'postCount' => $user->posts()->count(),
+            'followerCount' => $user->followers()->count(),
+            'followingCount' => $user->followingTheseUsers()->count()
         ]);
     }
 
@@ -93,7 +95,7 @@ class userController extends Controller
         $this->getSharedData($user);
         //Querying the username, posts and postCount from database
         return view('profile-followers', [
-            'posts' => $user->posts()->latest()->get(),
+            'followers' => $user->followers()->latest()->get(),
         ]);
     }
     // function for viewing those following
@@ -102,7 +104,7 @@ class userController extends Controller
        $this->getSharedData($user);
        //Querying the username, posts and postCount from database
        return view('profile-following', [
-           'posts' => $user->posts()->latest()->get(),
+           'following' => $user->followingTheseUsers()->latest()->get(),
        ]);
     }
     public function logout(){
