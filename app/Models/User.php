@@ -4,8 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Follow;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -55,6 +56,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    /** Used in home posts feed */
+    public function feedPosts(){
+        /** The parameter below has 6 arguments
+         * 1. The model that we want to end up with in this case posts from users being followed.
+         * 2. Intermediate table, it has the relationship needed to lookup.
+         * 3. Foreign key on the intermediate table.
+         * 4. Foreign key on the model we are interested in.
+         * 5. Local Key.
+         * 6. Local key on the intermediate table.
+          */
+        return $this->hasManyThrough(
+            Post::class,
+            Follow::class,
+            'user_id',
+            'user_id',
+            'id',
+            'followedUser'
+        );
     }
 
     /** Function below defines relationship between a user and a follower */

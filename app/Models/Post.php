@@ -9,6 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
+    // For data being involved when a post is made
     protected $fillable = ['title', 'body', 'user_id'];
 
     //For displaying user who made the post

@@ -48,7 +48,7 @@ class userController extends Controller
             // store to database
             $user->avatar = $filename;
             $user->save();
-            // Deleting old avatar incase the user updates their avatar
+            // Deleting old avatar if the user updates their avatar
             if ($oldAvatar != '/fallback-avatar.jpg') {
                 Storage::delete(str_replace("/storage/", "public/", $oldAvatar));
             }
@@ -113,7 +113,9 @@ class userController extends Controller
     }
     public function showCorrectHomePage(){
         if (auth()->check()) {
-            return view('homepage-feed');
+            return view('homepage-feed', [
+                'posts'=> auth()->user()->feedPosts()->latest()->get()
+            ]);
         } else {
             return view('homepage');
         }
