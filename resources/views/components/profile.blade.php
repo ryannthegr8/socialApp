@@ -1,4 +1,9 @@
-<x-layout>
+{{--NOTE: If you are passing a simple string of text, the colon is not needed.
+    1. The colon is used when you want to pass a PHP variable as a string attribute
+    2. In other cases when you are passing either a string or {{This kind of dynamic data}}, the colon wont be needed
+    3. Note the difference between PHP variable and {{This kind of dynamic data}}, It might be a little confusing --}}
+
+<x-layout :doctitle="$doctitle">
     <div class="container py-md-5 container--narrow">
         <h2>
           <img class="avatar-small" src="{{$sharedData['avatar']}}" /> {{$sharedData['username']}}

@@ -4,11 +4,8 @@
     <h2 class="text-center mb-4">Latest from those you follow</h2>
     <div class="list-group">
         @foreach ($posts as $post)
-        <a href="/post/{{$post->id}}" class="list-group-item list-group-item-action">
-          {{-- $post is used because the avatar in the post needs to be of the user who made the post --}}
-          <img class="avatar-tiny" src="{{$post->user->avatar}}" />
-          <strong>{{$post->title}}</strong> <span class="text-muted small">by {{$post->user->username}} on {{$post->created_at->format('n/j/Y')}}</span>
-        </a>
+        {{-- It uses the post component to know what to display --}}
+        <x-post :post="$post"/>
         @endforeach
       </div>
       <div class="mt-4">
