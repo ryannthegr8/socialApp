@@ -23,6 +23,7 @@ Route::post('/manage-avatar', [userController::class, 'storeAvatar'])->middlewar
 Route::get('/create-post',[PostController::class, 'showCreateForm'])->middleware('auth');
 Route::post('/create-post',[PostController::class, 'storeNewPost'])->middleware('auth');
 Route::get('/post/{post}',[PostController::class, 'viewSinglePost']);
+Route::get('/search/{term}', [PostController::class, 'search']);
 
 /**  Implementing delete with controller and and routes method.
  * The path is identical to the view single post, same url pattern.

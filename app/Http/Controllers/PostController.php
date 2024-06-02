@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function search($term){
+        $posts = Post::search($term)->get();
+        // To get more search data about users
+        $posts->load('user:id, username, avatar');
+
+        return $posts;
+    }
     /** Parameter requirements: Post type-hinting and Incoming request */
     public function actuallyUpdate(Post $post, Request $request){
         // validating the request
