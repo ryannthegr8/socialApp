@@ -89,6 +89,7 @@ class userController extends Controller
             'posts' => $user->posts()->latest()->get(),
         ]);
     }
+
     // function for viewing followers in profile
     public function profileFollowers(User $user){
         // importing shared function
@@ -106,6 +107,26 @@ class userController extends Controller
        return view('profile-following', [
            'following' => $user->followingTheseUsers()->latest()->get(),
        ]);
+    }
+
+    // Raw files
+    public function profileRaw(User $user){
+        return response()->json([
+            'theHTML' => view('profile-posts-only', ['posts' => $user->posts()->latest()->get()])->render(),
+            'docTitle' => $user->username . "'s Profile",
+        ]);
+    }
+    public function profileFollowersRaw(User $user){
+        return response()->json([
+            'theHTML' => view('profile-followers-only', ['followers' => $user->followers()->latest()->get()])->render(),
+            'docTitle' => $user->username . "'s Followers",
+        ]);
+    }
+    public function profileFollowingRaw(User $user){
+        return response()->json([
+            'theHTML' => view('profile-following-only', ['following' => $user->followingTheseUsers()->latest()->get()])->render(),
+            'docTitle' =>"Who " . $user->username . " Follows",
+        ]);
     }
     public function logout(){
         auth()->logout();

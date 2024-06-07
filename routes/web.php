@@ -39,6 +39,10 @@ Route::put('post/{post}', [PostController::class, 'actuallyUpdate'])->middleware
 Route::get('/profile/{user:username}', [userController::class, 'profile']);
 Route::get('/profile/{user:username}/followers', [userController::class, 'profileFollowers']);
 Route::get('/profile/{user:username}/following', [userController::class, 'profileFollowing']);
+//Profile URL endpoints
+Route::get('/profile/{user:username}/raw', [userController::class, 'profileRaw']);
+Route::get('/profile/{user:username}/followers/raw', [userController::class, 'profileFollowersRaw']);
+Route::get('/profile/{user:username}/following/raw', [userController::class, 'profileFollowingRaw']);
 
 // Follow related routes
 Route::post('/create-follow/{user:username}', [FollowController::class, 'createFollow'])->middleware('auth');
