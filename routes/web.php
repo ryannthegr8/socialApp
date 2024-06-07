@@ -1,9 +1,10 @@
 <?php
 
+use App\Events\ChatMessage;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\userController;
-use GuzzleHttp\Middleware;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Admin pages
@@ -42,5 +43,28 @@ Route::get('/profile/{user:username}/following', [userController::class, 'profil
 // Follow related routes
 Route::post('/create-follow/{user:username}', [FollowController::class, 'createFollow'])->middleware('auth');
 Route::post('/remove-follow/{user:username}', [FollowController::class, 'removeFollow'])->middleware('auth');
+
+// Chat related routes
+Route::post('/send-chat-message', function(Request $request){
+    // validating text data
+    $formFields = $request->validate([
+        'textvalue' => 'required'
+    ]);
+
+    if (!trim(strip_tags($formFields['textvalue']))) {
+        return response()->noContent();
+    }
+
+    /**  Broadcasting new instance of our ChatMessage event
+     * In the instance we can get data about the user i.e username, avatar
+     */
+    broadcast(new ChatMessage(
+        ['username' =>auth()->user()->username,
+        'textvalue' =>strip_tags($request->textvalue),
+        'avatar' =>auth()->user()->avatar]
+    ))->toOthers();
+    return response()->noContent();
+
+})->middleware('auth');
 
 
